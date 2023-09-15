@@ -1,15 +1,18 @@
+**- _Сервис развернут на выделенном сервере по адресу_ http://91.196.7.31:8080/tariffs**
+
+**- _Репозиторий с исходным кодом_ https://github.com/LLaym/tariffparser**
+
+
 # :bookmark: TariffParser - парсер МТС тарифов с функцией подбора
 
 **TariffParser** - сервис-парсер. Основная функция сервиса - сбор информации об актуальных тарифах и подбор наиболее
 подходящего пользователю тарифа.
 Программа предоставляет пользовательский UI для работы с приложением, открываемый в браузере.
 
-**Стек приложения:** Java 11, Spring (Boot, JPA, Thymeleaf), PostgreSQL, Jsoup, Lombok, JUnit5, H2
+**Стек приложения:** Java 11, Spring Boot, JPA, Thymeleaf, PostgreSQL, Jsoup, Lombok, JUnit5, H2
 
-## :earth_americas: Веб-сервис
-Сервис развернут в сети интернет по адресу http://91.196.7.31:8080/tariffs
+**Интерфейс программы:**
 
-Интерфейс программы:
 ![img.png](src/main/resources/gui_image.png)
 
 ## :checkered_flag: Установка и запуск
