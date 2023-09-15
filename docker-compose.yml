@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  tariffparser:
+    build:
+      dockerfile: Dockerfile
+    container_name: tariffparser
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - tariffparser-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tariffparser-db:5432/tariffparser
+      - SPRING_DATASOURCE_NAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+
+  tariffparser-db:
+    image: postgres:14-alpine
+    container_name: tariffparser-db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=tariffparser
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

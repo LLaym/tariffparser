@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tariffs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 5px;
+            width: 200px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        div.tariff {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+Введите необходимое количество гигабайт, минут и т.д. в пакете, которое вам нужно и жмите "Подобрать тарифы".
+Отобразятся все тарифы, подходящие под условия. <br/><br/>
+<form action="/tariffs">
+    <label for="minDataPackage"> Пакет гигабайт (от):
+        <input id="minDataPackage" type="number" name="minDataPackageDb" th:value="${filter.minDataPackageDb}">
+    </label>
+    <label for="minMinutesPackage"> Пакет минут (от):
+        <input id="minMinutesPackage" type="number" name="minMinutesPackage" th:value="${filter.minMinutesPackage}">
+    </label>
+    <label for="minInternetSpeedMbps"> Скорость (Mb/s) (от):
+        <input id="minInternetSpeedMbps" type="number" name="minInternetSpeedMbps"
+               th:value="${filter.minInternetSpeedMbps}">
+    </label>
+    <label for="minTvChannels"> Количество ТВ каналов (от):
+        <input id="minTvChannels" type="number" name="minTvChannels" th:value="${filter.minTvChannels}">
+    </label>
+    <label for="feeLimit"> Стоимость тарифа (потолок):
+        <input id="feeLimit" type="number" name="feeLimit" th:value="${filter.feeLimit}">
+    </label>
+
+    <div>
+        <label for="page">Page
+            <input id="page" type="number" name="page" th:value="${tariffs.metadata.page}">
+        </label>
+        <label for="size">Size
+            <input id="size" type="number" name="size" th:value="${tariffs.metadata.size}">
+        </label>
+    </div>
+
+    <button type="submit">Подобрать тарифы</button>
+</form>
+
+<form method="post" action="/parse">
+    <button type="submit">Парсить</button>
+</form>
+
+<div th:each="tariff : ${tariffs.content}" class="tariff">
+    <a th:href="@{${tariff.link}}" th:text="${tariff.title}">Tariff</a>
+    <p th:if="${tariff.description != null}" th:text="${'Описание: ' + tariff.description}"></p>
+    <p th:if="${tariff.dataPackageGb != null}" th:text="${'Пакет гигабайт: ' + tariff.dataPackageGb}"></p>
+    <p th:if="${tariff.minutesPackage != null}" th:text="${'Пакет минут: ' + tariff.minutesPackage}"></p>
+    <p th:if="${tariff.internetSpeedMbps != null}" th:text="${'Скорость (Гбит/с): ' + tariff.internetSpeedMbps}"></p>
+    <p th:if="${tariff.tvChannels != null}" th:text="${'Количество ТВ каналов: ' + tariff.tvChannels}"></p>
+    <p th:if="${tariff.subscriptionFee != null}" th:text="${'Стоимость по скидке: ' + tariff.subscriptionFee}"></p>
+    <p th:if="${tariff.discountFee != null}" th:text="${'Стоимость обычная: ' + tariff.discountFee}"></p>
+    <p th:if="${tariff.subscriptionFeeAnnotationSettings != null}"
+       th:text="${'Уточнение к стоимости: ' + tariff.subscriptionFeeAnnotationSettings}"></p>
+    <p th:if="${tariff.benefitsDescription != null}"
+       th:text="${'Дополнительные бонусы: ' + tariff.benefitsDescription}"></p>
+</div>
+
+</body>
+</html>
